@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+actor "Player" as player
+
+' Start screen
+usecase "Start game" as start_game
+
+player --> start_game
+
+' game scene
+usecase "Move laser canon" as move_canon
+usecase "Shot" as shot
+usecase "Pause game" as pause_game
+
+player --> move_canon
+player --> shot
+player --> pause_game
+
+' Game menu
+usecase "Resume game" as resume_game
+usecase "Restart game" as restart_game
+usecase "Stop game" as stop_game
+usecase "Exit game" as exit_game
+
+restart_game .> start_game: include
+restart_game .> stop_game: include
+exit_game .> stop_game: include
+
+player --> exit_game
+player --> restart_game
+player --> resume_game
+
+@enduml
