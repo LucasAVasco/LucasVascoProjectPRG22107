@@ -1,12 +1,29 @@
-# Projeto orientado a objeto
+# Object oriented project
 
->[!NOTE] 
-> O **Projeto orientado a objeto** é composto pelas documentação do
-projeto descrito em UML. Deve incluir um Diagrama de Classes do sistema
-projetado, e pelo menos um diagrama de interação de um dos casos de uso. Outros
-diagramas podem ser apresentados, caso julgue necessário.
+<!-- toc -->
 
+- [Class diagram](#class-diagram)
+- [Sequence diagrams](#sequence-diagrams)
 
+<!-- tocstop -->
+
+## Class diagram
+
+![Class diagram](./proj-diagrams/class.png)
+
+## Sequence diagrams
+
+Player shooting enemy:
+
+![Player shooting enemy](./proj-diagrams/player-bullet-sequence.png)
+
+Enemy shooting player:
+
+![Enemy shooting player](./proj-diagrams/enemy-bullet-sequence.png)
+
+Bullet shooting bunker:
+
+![Bullet shooting bunker](./proj-diagrams/bunker-bullet-sequence.png)
 
 <div align="center">
 

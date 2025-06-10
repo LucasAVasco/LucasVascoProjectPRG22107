@@ -1,0 +1,24 @@
+@startuml
+participant Enemy
+participant Bullet
+participant Player
+
+activate Player
+activate Enemy
+
+Enemy --> Bullet: shot
+activate Bullet
+
+alt Bullet collides with Player
+	alt Player has lives
+		Bullet --> Player: damages
+	else
+		Bullet --> Player: kill
+	end
+
+	Player -->x Bullet: destroy
+end
+
+deactivate Bullet
+
+@enduml

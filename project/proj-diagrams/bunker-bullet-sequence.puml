@@ -1,0 +1,22 @@
+@startuml
+participant Bullet
+participant Bunker
+
+activate Bullet
+activate Bunker
+
+Bullet --> Bunker: shot
+
+alt Bullet collides with Bunker
+	alt Bunker has lives
+		Bullet --> Bunker: damages
+	else
+		Bullet --> Bunker: kill
+	end
+
+	Bunker -->x Bullet: destroy
+end
+
+deactivate Bullet
+
+@enduml

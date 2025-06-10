@@ -1,0 +1,257 @@
+@startuml
+	class SpritePixmap {
+		SpritePixmap(path: char[], width: int, height: int)
+
+		QGraphicsPixmapItem *addToScene(scene: QGraphicsScene*)
+
+		- _pixmap: QPixmap;
+	}
+
+	class Sprite {
+		Sprite(sprite: SpritePixmap*, scene: QGraphicsScene*)
+
+		updatePosition(x: double , y: double )
+		remove()
+
+		_item: QGraphicsPixmapItem*
+	}
+
+	class Alive {
+		Alive(int lives)
+
+		getNumLives(): int
+		takeDamage(num_lines: uint32_t)
+		isAlive(): bool
+
+		- _lives: uint32_t
+	}
+
+	class Region {
+		Region(int x, int y, int width, int height)
+
+		getXPosition(): int
+		getYPosition(): int
+
+		isInside(region: Region*): bool
+		isInsideBox(int x, int y, int width, int height): bool
+
+		# _x: int
+		# _y: int
+		# _width: int
+		# _height: int
+	}
+
+	class Point {
+		+ x: int
+		+ y: int
+	}
+
+	class Area {
+		+ begin: Point
+		+ end: Point
+	}
+	Area "1" o-- "2" Point
+
+	class Movable {
+		Movable(int x, int y, int width, int height)
+
+		setMaxArea(area: Area*)
+
+		isColidingRight(): bool
+		isColidingLeft(): bool
+		isColidingUp(): bool
+		isColidingDown(): bool
+
+		setXVelocity(int vel)
+		setYVelocity(int vel)
+		setVelocity(int dx, int dy)
+
+		getXVelocity(): int
+		getYVelocity(): int
+
+		updateXPosition()
+		updateYPosition()
+		updatePosition()
+
+		- _limited_area: Area
+		- _dx: int
+		- _dy: int
+	}
+
+	Movable --|> Region
+	Movable "1" o-- "1" Area: Limited area
+
+	class SpaceShip {
+		SpaceShip(scene: QGraphicsScene*, int x, int y)
+
+		updateRender()
+		isShot(bullet: Bullet): bool
+		shot(): Bulet*
+
+		- _sprite_pixmap: SpritePixmap
+		- _sprite: Sprite
+	}
+	SpaceShip --|> Movable
+	SpaceShip --|> Alive
+	SpaceShip "1" o-- "1" Sprite
+
+	enum Bullet::Target {
+		PLAYER
+		SPACESHIP
+	}
+
+	class Bullet {
+		Bullet(scene: QGraphicsScene*, target: Target, int x, int y)
+		updateRender()
+
+		+ target: Target
+
+		- _sprite_pixmap: SpritePixmap
+		- _sprite: Sprite
+	}
+	note right of Bullet::target
+		This attribute is constant
+	end note
+
+	Bullet --|> Movable
+	Bullet "1" o-- "1" Sprite
+	Bullet +-- Bullet::Target
+
+	class Player {
+		Player(scene: QGraphicsScene*, x: int, y: int)
+
+		updateRender()
+		isShot(bullet: Bullet): bool
+		shot(): Bullet
+		addScore(score: uint32_t )
+		getScore(): uint32_t
+
+		- _sprite_pixmap: SpritePixmap
+		- _sprite: Sprite
+		- _score: uint32_t
+	}
+
+	Player --|> Alive
+	Player --|> Movable
+	Player "1" o-- "1" Sprite
+
+	class Wave {
+		Wave(scene: QGraphicsScene*, scene_width: int, scene_height: int, wave_width: int, count: int)
+		updatePosition()
+		updateRender()
+		shot(bullets: Bullets[])
+		killShotEnemies(bullets: Bullets[]): uint32_t
+		getNumEnemies(): size_t
+
+		- enemyList: SpaceShip[]
+	}
+	Wave "1" *-- "*" SpaceShip
+
+	class Bunker {
+		Bunker(scene: QGraphicsScene*, x: int, y: int)
+		updateRender()
+		isShot(bullet: Bullet[]): bool
+
+		- _sprite_pixmap: SpritePixmap
+		- _sprite: Sprite
+	}
+	Bunker --|> Alive
+	Bunker --|> Region
+	Bunker "1" o-- "1" Sprite
+
+	enum EndGameMenu::PressedButton {
+		RESTART
+		EXIT
+	}
+
+	class EndGameMenu {
+		EndGameMenu(callback: Callback)
+
+		getWidget(): QWidget*
+		updateScore(score: uint32_t)
+
+		- _callback: Callback
+		- _widget: QWidget
+		- _score_text: QLabel
+		- _layout: QVBoxLayout
+		- _restart_button: QPushButton
+		- _exit_button: QPushButton
+	}
+	EndGameMenu +-- EndGameMenu::PressedButton
+
+	enum PauseGameMenu::PressedButton {
+		RESUME
+		RESTART
+		EXIT
+	}
+
+	class PauseGameMenu {
+		PauseGameMenu(callback: Callback)
+
+		getWidget(): QWidget*
+
+		show(): void
+
+		hide(): void
+
+		- _callback: Callback
+		- _widget: QWidget
+		- _layout: QVBoxLayout
+		- _resume_button: QPushButton
+		- _restart_button: QPushButton
+		- _exit_button: QPushButton
+	}
+	PauseGameMenu +-- PauseGameMenu::PressedButton
+
+	class GameScene {
+		GameScene(width: int, height: int)
+		show()
+
+		- _wave: Wave
+		- _player: Player
+		- _bunkers: Bunker[]
+		- _bullets: Bullet[]
+		- _pause_menu: PauseGameMenu
+		- _end_game_menu: EndGameMenu
+	}
+	GameScene "1" *-- "1" Player
+	GameScene "1" *-- "1..3" Bunker
+	GameScene "1" *-- "1" Wave
+	GameScene "1" *-- "*" Bullet
+	GameScene "1" *-- "*" EndGameMenu
+	GameScene "1" *-- "*" PauseGameMenu
+
+	enum InitialMenuScene::PressedButton {
+		START
+		EXIT
+	}
+
+	class InitialMenuScene {
+		InitialMenuScene(app: QApplication*, width: int , height: int, callback: Callback)
+
+		- _app;: QApplication*
+		- _callback: Callback
+		- _widget: QWidget
+		- _layout: QVBoxLayout
+		- _text: QLabel
+		- _start_button: QPushButton
+		- _exit_button: QPushButton
+	}
+	InitialMenuScene +-- InitialMenuScene::PressedButton
+
+	class Game {
+
+		Game(app: QApplication, width: int, height: int)
+		start(): int
+
+		- _width: int
+		- _height: int
+		- _view: QGraphicsView
+		- _game_scene: GameScene
+		- _initial_scene: InitialMenuScene
+		- _app: QApplication*
+	}
+
+	Game "1" *-- "1" GameScene
+	Game "1" *-- "1" InitialMenuScene
+@enduml
