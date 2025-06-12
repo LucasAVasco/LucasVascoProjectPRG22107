@@ -2,7 +2,7 @@
 	class SpritePixmap {
 		SpritePixmap(path: char[], width: int, height: int)
 
-		QGraphicsPixmapItem *addToScene(scene: QGraphicsScene*)
+		addToScene(scene: QGraphicsScene*): QGraphicsPixmapItem
 
 		- _pixmap: QPixmap;
 	}
@@ -33,7 +33,7 @@
 		getYPosition(): int
 
 		isInside(region: Region*): bool
-		isInsideBox(int x, int y, int width, int height): bool
+		isInsideBox(x: int, y: int, width: int, height: int): bool
 
 		# _x: int
 		# _y: int
@@ -53,7 +53,7 @@
 	Area "1" o-- "2" Point
 
 	class Movable {
-		Movable(int x, int y, int width, int height)
+		Movable(x: int, y: int, width: int, height: int)
 
 		setMaxArea(area: Area*)
 
@@ -62,9 +62,9 @@
 		isColidingUp(): bool
 		isColidingDown(): bool
 
-		setXVelocity(int vel)
-		setYVelocity(int vel)
-		setVelocity(int dx, int dy)
+		setXVelocity(vel: int)
+		setYVelocity(vel: int)
+		setVelocity(dx: int, dy: int)
 
 		getXVelocity(): int
 		getYVelocity(): int
@@ -82,10 +82,10 @@
 	Movable "1" o-- "1" Area: Limited area
 
 	class SpaceShip {
-		SpaceShip(scene: QGraphicsScene*, int x, int y)
+		SpaceShip(scene: QGraphicsScene*, x: int, y: int)
 
 		updateRender()
-		isShot(bullet: Bullet): bool
+		isShot(bullet: Bullet*): bool
 		shot(): Bulet*
 
 		- _sprite_pixmap: SpritePixmap
@@ -101,7 +101,7 @@
 	}
 
 	class Bullet {
-		Bullet(scene: QGraphicsScene*, target: Target, int x, int y)
+		Bullet(scene: QGraphicsScene*, target: Target, x: int, y: int)
 		updateRender()
 
 		+ target: Target
@@ -240,7 +240,6 @@
 	InitialMenuScene +-- InitialMenuScene::PressedButton
 
 	class Game {
-
 		Game(app: QApplication, width: int, height: int)
 		start(): int
 
