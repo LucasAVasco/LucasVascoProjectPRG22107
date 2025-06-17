@@ -1,4 +1,7 @@
 @startuml
+	skinparam style strictuml
+	skinparam classAttributeIconSize 0
+
 	GameScene "1" --- "1" Player: Has
 	GameScene "1" --- "1" LaserCanon: Has
 	GameScene "1" --- "3" Bunker: Has
