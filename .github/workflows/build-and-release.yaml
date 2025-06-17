@@ -1,0 +1,66 @@
+name: Build and Release
+
+concurrency:
+  group: Build and Release
+  cancel-in-progress: true
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake qt6-base-dev qt6-tools-dev-tools libgl1-mesa-dev
+
+      - name: Configure project
+        working-directory: ./project/code/
+        run: cmake --preset=make
+
+      - name: Build project
+        working-directory: ./project/code/
+        run: cmake --build build
+
+      - name: Upload build artifact
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: space-invaders-bin
+          path: ./project/code/build/space-invaders
+
+  release:
+    needs: build
+    if: ${{ !github.event.act }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to repository
+        uses: actions/checkout@v4
+
+      - name: Download built binary
+        uses: actions/download-artifact@v4
+        with:
+          name: space-invaders-bin
+
+      - name: Compact files
+        run: |
+          cp -r ./project/code/assets/ .
+          chmod 700 space-invaders
+          tar czf space-invaders.tar.gz space-invaders assets
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: space-invaders.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
