@@ -15,11 +15,12 @@ player controls a laser canon, which can be used to kill spaceships.
 > PRG22107 - Object oriented programming.
 >
 > Student: Lucas de Amorim Vasco
+>
 > Teacher: Hugo Marcondes
 
 <p align=center><strong>SUMMARY</strong></p>
 
 [**1. OBJECT ORIENTED ANALYZES**](./analise.md)<br>
 [**2. OBJECT ORIENTED PROJECT**](./projeto.md)<br>
-[**3. IMPLEMENTAÇÃO (C++)**](./implementacao.md)<br>
+[**3. IMPLEMENTATION (C++)**](./implementacao.md)<br>
 [**4. TESTES**](./testes.md)<br>
