@@ -54,8 +54,11 @@
 		+ getXPosition(): int
 		+ getYPosition(): int
 
-		+ isInside(region: Region*): bool
 		+ isInside(x: int, y: int, width: int, height: int): bool
+		+ isInside(region: Region*): bool
+
+		+ isColliding(x: int, y: int, width: int, height: int): bool
+		+ isColliding(region: Region&): bool
 
 		+ updateSpritePosition()
 
@@ -84,12 +87,12 @@
 	class Movable extends Region {
 		+ Movable(scene: QGraphicsScene*, sprite_pixmap: SpritePixmap&, area Region::Area&&)
 
-		+ setMaxArea(area: LimitedArea&)
+		+ setLimitedArea(area: LimitedArea&)
 
-		+ isColidingRight(): bool
-		+ isColidingLeft(): bool
-		+ isColidingUp(): bool
-		+ isColidingDown(): bool
+		+ isCollidingAtLimitAreaRight(): bool
+		+ isCollidingAtLimitAreaLeft(): bool
+		+ isCollidingAtLimitAreaTop(): bool
+		+ isCollidingAtLimitAreaBottom(): bool
 
 		+ setXPosition(x: int)
 		+ setYPosition(y: int)
