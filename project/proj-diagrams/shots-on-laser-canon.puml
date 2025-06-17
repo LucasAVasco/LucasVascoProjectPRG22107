@@ -1,0 +1,43 @@
+@startuml
+participant "game_scene : GameScene" as Scene
+participant "_laser_canon : LaserCanon" as Cannon
+participant "_bullets : Bullet[]" as Bullets
+
+Scene -> Scene: _checkShotsOnLaserCanon()
+activate Scene
+
+Scene -> Scene: continue_check = true
+
+loop continue_check
+	Scene -> Bullets: next()
+	activate Bullets
+	Bullets --> Scene: bullet
+	deactivate Bullets
+
+	alt bullet == nullptr
+		Scene -> Scene: continue_check = false
+	else
+		Scene -> Cannon: isShot(bullet)
+		activate Cannon
+		Cannon --> Scene: bulletShotLaserCanon
+		deactivate Cannon
+
+		alt bulletShotLaserCanon
+			Scene -> Bullets: remove(bullet)
+			activate Bullets
+			Bullets --> Scene: void
+			deactivate Bullets
+
+			Scene -> Cannon: takeDamage()
+			activate Cannon
+			Cannon --> Scene: void
+			deactivate Cannon
+
+			Scene -> Scene: continue_check = false
+			note right : The laser canon can take damage only on time per check
+		end
+	end
+end
+
+deactivate Scene
+@enduml

@@ -243,6 +243,11 @@
 	class GameScene {
 		+ GameScene(width: int, height: int, exit_button_callback: ExitButtonCallback)
 
+		- _deleteOutOfRangeBullets()
+		- _checkShotsOnLaserCanon()
+		- _checkShotsOnBunkers()
+		- _killShotEnemies()
+
 		- _width: int
 		- _height: int
 		- _exit_button_callback: ExitButtonCallback

@@ -1,0 +1,34 @@
+@startuml
+participant "game_scene : GameScene" as Scene
+participant "_laser_canon : LaserCanon" as Cannon
+
+Scene -> Scene: keyReleaseEvent(event)
+activate Scene
+
+alt event.key == Qt::Key_Left
+	Scene -> Cannon: getXVelocity()
+	activate Cannon
+	Cannon --> Scene: velocity
+	deactivate Cannon
+	alt velocity < 0
+		Scene -> Cannon: setXVelocity(0)
+		activate Cannon
+		Cannon --> Scene: void
+		deactivate Cannon
+	end
+
+else event.key == Qt::Key_Right
+	Scene -> Cannon: getXVelocity()
+	activate Cannon
+	Cannon --> Scene: velocity
+	deactivate Cannon
+	alt velocity > 0
+		Scene -> Cannon: setXVelocity(0)
+		activate Cannon
+		Cannon --> Scene: void
+		deactivate Cannon
+	end
+end
+
+deactivate Scene
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+participant "game_scene : GameScene" as Scene
+participant "_bullets : Bullet[]" as Bullets
+participant "bullet[i] : Bullet" as Bullet
+
+Scene -> Scene: _deleteOutOfRangeBullets()
+activate Scene
+
+Scene -> Scene: continue_check = true
+
+loop continue_check
+	Scene -> Bullets: next()
+	activate Bullets
+	Bullets --> Scene: bullet[i]
+	deactivate Bullets
+    deactivate Bullets
+
+	alt bullet[i] == nullptr
+		Scene -> Scene: continue_check = false
+	else
+		Scene -> Bullet: isInside(0, 0, _width, _height)
+		activate Bullet
+		Bullet --> Scene: isInside
+		deactivate Bullet
+
+		alt !isInside
+			Scene -> Bullets: remove(bullet[i])
+			activate Bullets
+			Bullets --> Scene: void
+			deactivate Bullets
+		end
+		deactivate Bullet
+	end
+end
+
+deactivate Scene
+@enduml

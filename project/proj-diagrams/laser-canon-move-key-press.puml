@@ -1,0 +1,22 @@
+@startuml
+participant "game_scene : GameScene" as Scene
+participant "_laser_canon : LaserCanon" as Cannon
+
+Scene -> Scene: keyPressEvent(event)
+activate Scene
+
+alt event.key == Qt::Key_Left
+	Scene -> Cannon: setXVelocity(-10)
+	activate Cannon
+	Cannon --> Scene: void
+	deactivate Cannon
+
+else event.key == Qt::Key_Right
+	Scene -> Cannon: setXVelocity(10)
+	activate Cannon
+	Cannon --> Scene: void
+	deactivate Cannon
+end
+
+deactivate Scene
+@enduml
