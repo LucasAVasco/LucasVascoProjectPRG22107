@@ -80,7 +80,7 @@ game (exit).
 
 ### Use cases
 
-![Use case diagram](./analyze-diagrams/use-cases.png)
+![Use case diagram](./analyze-diagrams/use-cases.svg)
 
 For organization purposes, use cases are organized into: start screen, game scene and game menu.
 
@@ -108,7 +108,7 @@ For organization purposes, use cases are organized into: start screen, game scen
 
 ## Domain problem diagram
 
-![Domain diagram](./analyze-diagrams/domain-problem.png)
+![Domain diagram](./analyze-diagrams/domain-problem.svg)
 
 <div align="center">
 
