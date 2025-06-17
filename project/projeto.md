@@ -32,7 +32,7 @@ LaserCanon class to know if the player has been hit. If `true`, it deletes the b
 
 ![Shots on laser canon](./proj-diagrams/shots-on-laser-canon.svg)
 
-If a bullet get out of range (GameScene area), it must be deleted to free up memory. The following diagram shows shows this is done.
+If a bullet get out of range (GameScene area), it must be deleted to free up memory. The following diagram shows how this is done.
 
 ![Delete out of range bullets](./proj-diagrams/delete-out-of-range-bullets.svg)
 
