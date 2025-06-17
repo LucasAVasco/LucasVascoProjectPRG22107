@@ -1,18 +1,18 @@
 @startuml
-    GameScene "1" --- "1" Player: Has
-    GameScene "1" --- "1" LaserCanon: Has
-    GameScene "1" --- "3" Bunker: Has
-    GameScene "1" --- "*" Enemy: Has
+	GameScene "1" --- "1" Player: Has
+	GameScene "1" --- "1" LaserCanon: Has
+	GameScene "1" --- "3" Bunker: Has
+	GameScene "1" --- "*" Enemy: Has
 
 	Player "1" --- "1" LaserCanon: Controls
 
-    LaserCanon "1" --> "*" Bullet: Shot
-    Bullet "1" --> "1" LaserCanon: Damages
+	LaserCanon "1" --> "*" Bullet: Shot
+	Bullet "1" --> "1" LaserCanon: Damages
 
-    Enemy "1" --> "*" Bullet: Shot
-    Bullet "1" --> "1" Enemy: Kills
+	Enemy "1" --> "*" Bullet: Shot
+	Bullet "1" --> "1" Enemy: Kills
 
-    Bullet "1" --- "1" Bunker: Damages
-    LaserCanon "1" --- "0..3" Bunker: Takes cover
+	Bullet "1" --- "1" Bunker: Damages
+	LaserCanon "1" --- "0..3" Bunker: Takes cover
 @enduml
 
