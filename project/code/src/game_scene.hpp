@@ -70,7 +70,10 @@ class GameScene : public QGraphicsScene {
 
         case Qt::Key_Space:
             if (!_isPaused()) {
-                _bullets.push_back(_laser_canon->shot());
+                auto bullet = _laser_canon->shot();
+                if (bullet.get() != nullptr) {
+                    _bullets.push_back(std::move(bullet)); // TODO
+                }
             }
             break;
 
