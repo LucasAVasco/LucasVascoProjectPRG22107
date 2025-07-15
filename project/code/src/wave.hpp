@@ -22,7 +22,7 @@ class Wave {
 
         int offset_x = 0, offset_y = 0;
 
-        for (int i = ships_count; i >= 0; i--) {
+        for (uint32_t i = ships_count; i > 0; i--) {
             _space_ships.emplace_back(scene, offset_x, offset_y);
             auto &created_space_ship = _space_ships.back();
             created_space_ship.setLimitedArea(area);
