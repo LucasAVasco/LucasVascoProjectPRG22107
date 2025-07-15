@@ -42,6 +42,40 @@ class GameScene : public QGraphicsScene {
     GameScene(int width, int height, Callback exit_button_callback);
     ~GameScene();
 
+    void restart() {
+        this->_pause_menu_proxy->hide();
+        this->_end_game_menu_proxy->hide();
+
+        // Bunkers
+        _bunkers.clear();
+
+        for (auto x :
+             {0, _width / 2 - Bunker::WIDTH / 2, _width - Bunker::WIDTH}) {
+            _bunkers.emplace_back(this, x, _height + BUNKER_OFFSET);
+        }
+
+        // Laser Canon
+        if (_laser_canon != nullptr) {
+            delete _laser_canon;
+        }
+        _laser_canon = new LaserCanon(this, _width / 2 - LaserCanon::WIDTH / 2,
+                                      _height - LaserCanon::HEIGHT - 50);
+
+        // Laser canon max area
+        Movable::LimitedArea area = {
+            .begin = {0, 0},
+            .end = {_width, _height},
+        };
+        _laser_canon->setLimitedArea(area);
+
+        // Enemies
+        _newWave();
+        _num_waves = 0;
+
+        // Bullets
+        _bullets.clear();
+    }
+
     void keyReleaseEvent(QKeyEvent *key_event) {
         switch (key_event->key()) {
 
@@ -137,40 +171,6 @@ class GameScene : public QGraphicsScene {
     }
 
   private:
-    void _restart() {
-        this->_pause_menu_proxy->hide();
-        this->_end_game_menu_proxy->hide();
-
-        // Bunkers
-        _bunkers.clear();
-
-        for (auto x :
-             {0, _width / 2 - Bunker::WIDTH / 2, _width - Bunker::WIDTH}) {
-            _bunkers.emplace_back(this, x, _height + BUNKER_OFFSET);
-        }
-
-        // Laser Canon
-        if (_laser_canon != nullptr) {
-            delete _laser_canon;
-        }
-        _laser_canon = new LaserCanon(this, _width / 2 - LaserCanon::WIDTH / 2,
-                                      _height - LaserCanon::HEIGHT - 50);
-
-        // Laser canon max area
-        Movable::LimitedArea area = {
-            .begin = {0, 0},
-            .end = {_width, _height},
-        };
-        _laser_canon->setLimitedArea(area);
-
-        // Enemies
-        _newWave();
-        _num_waves = 0;
-
-        // Bullets
-        _bullets.clear();
-    }
-
     bool _isPaused() {
         return !_laser_canon->isAlive() || _pause_menu_proxy->isVisible() ||
                _end_game_menu_proxy->isVisible();

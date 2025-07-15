@@ -38,7 +38,10 @@ class Game {
     };
 
   private:
-    void _startGame() { _view.setScene(&_game_scene); }
+    void _startGame() {
+        _view.setScene(&_game_scene);
+        _game_scene.restart();
+    }
 
     void _exitGame() { _app->quit(); }
 

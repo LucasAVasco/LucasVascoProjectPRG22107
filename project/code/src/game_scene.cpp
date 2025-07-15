@@ -13,7 +13,7 @@ GameScene::GameScene(int width, int height, Callback exit_button_callback)
               break;
 
           case PauseGameMenu::PressedButton::RESTART:
-              this->_restart();
+              this->restart();
               break;
 
           case PauseGameMenu::PressedButton::EXIT:
@@ -25,7 +25,7 @@ GameScene::GameScene(int width, int height, Callback exit_button_callback)
           switch (pressed_button) {
 
           case EndGameMenu::PressedButton::RESTART:
-              this->_restart();
+              this->restart();
               break;
 
           case EndGameMenu::PressedButton::EXIT:
@@ -57,7 +57,7 @@ GameScene::GameScene(int width, int height, Callback exit_button_callback)
     _end_game_menu_proxy->hide();
 
     // Initialization of laser canon, enemies, bunkers, etc.
-    _restart();
+    restart();
 
     // Score text
     QFont font("Arial", 16, QFont::Bold);
