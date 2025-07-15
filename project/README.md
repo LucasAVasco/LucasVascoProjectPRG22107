@@ -23,4 +23,4 @@ player controls a laser canon, which can be used to kill spaceships.
 [**1. OBJECT ORIENTED ANALYZES**](./analise.md)<br>
 [**2. OBJECT ORIENTED PROJECT**](./projeto.md)<br>
 [**3. IMPLEMENTATION (C++)**](./implementacao.md)<br>
-[**4. TESTES**](./testes.md)<br>
+[**4. TESTS**](./testes.md)<br>
