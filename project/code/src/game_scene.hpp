@@ -15,6 +15,7 @@
 #include <QPushButton>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <algorithm>
 #include <memory>
 #include <qapplication.h>
 #include <qboxlayout.h>
@@ -161,6 +162,7 @@ class GameScene : public QGraphicsScene {
 
         // Enemies
         _newWave();
+        _num_waves = 0;
 
         // Bullets
         _bullets.clear();
@@ -175,7 +177,14 @@ class GameScene : public QGraphicsScene {
         if (_wave != nullptr) {
             delete _wave;
         }
-        _wave = new Wave(this, _width, _height, _width / 2, 10);
+
+        // Number of ships
+        uint32_t ships_count = 10 + _num_waves * 4;
+        ships_count = std::clamp(ships_count, 10u, 30u);
+
+        // New wave
+        _wave = new Wave(this, _width, _height, _width / 2, ships_count);
+        ++_num_waves;
     }
 
     void _deleteOutOfRangeBullets() {
@@ -246,6 +255,7 @@ class GameScene : public QGraphicsScene {
 
     LaserCanon *_laser_canon = nullptr;
     Wave *_wave = nullptr;
+    uint32_t _num_waves;
     std::list<Bunker> _bunkers;
     std::list<std::unique_ptr<Bullet>> _bullets;
 
