@@ -52,7 +52,7 @@ class Movable : public Region {
             return false;
         }
 
-        return _y == _limited_area.value().end.y;
+        return _y + _height == _limited_area.value().end.y;
     }
 
     void setXPosition(int x) {
