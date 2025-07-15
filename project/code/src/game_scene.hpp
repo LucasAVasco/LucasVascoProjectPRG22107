@@ -26,7 +26,6 @@
 #include <qnamespace.h>
 #include <qobjectdefs.h>
 #include <qpixmap.h>
-#include <qtmetamacros.h>
 #include <qwidget.h>
 #include <string>
 
