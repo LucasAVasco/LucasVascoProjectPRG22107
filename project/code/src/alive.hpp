@@ -5,7 +5,7 @@
 
 class Alive {
   public:
-    Alive(uint32_t lives) : _lives(lives) {};
+    Alive(uint32_t lives=3) : _lives(lives) {};
 
     bool isAlive() const { return _lives > 0; }
     uint32_t getNumLives() const { return _lives; }
@@ -18,7 +18,11 @@ class Alive {
         }
     }
 
+    void die() {
+      _lives = 0;
+    }
+
   protected:
-    uint32_t _lives = 3;
+    uint32_t _lives;
 };
 #endif // end of ALIVE_HPP

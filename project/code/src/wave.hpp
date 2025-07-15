@@ -110,6 +110,20 @@ class Wave {
 
     size_t getNumSpaceShips() const { return _space_ships.size(); }
 
+    int getBottom() {
+        int bottom = 0;
+
+        for (auto &&space_ship : _space_ships) {
+            auto pos = space_ship.getYPosition();
+
+            if (pos > bottom) {
+                bottom = pos;
+            }
+        }
+
+        return bottom + SpaceShip::HEIGHT;
+    }
+
   private:
     void _updateEnemiesPositions() {
         for (auto &&space_ship : _space_ships) {

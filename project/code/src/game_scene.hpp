@@ -175,6 +175,10 @@ class GameScene : public QGraphicsScene {
             bullet->updatePosition();
         }
 
+        if (_wave->getBottom() >= _height + BUNKER_OFFSET) {
+            _laser_canon->die();
+        }
+
         _deleteOutOfRangeBullets();
         _killShotEnemies();
         _checkShotsOnLaserCanon();
