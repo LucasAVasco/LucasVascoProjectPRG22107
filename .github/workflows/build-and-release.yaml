@@ -24,7 +24,7 @@ jobs:
 
       - name: Configure project
         working-directory: ./project/code/
-        run: cmake --preset=make
+        run: cmake --preset=release
 
       - name: Build project
         working-directory: ./project/code/
