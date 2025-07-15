@@ -5,7 +5,7 @@ You must have a C++ compiler, CMake and the Qt framework installed (including de
 Setup command:
 
 ```sh
-cmake --preset=make
+cmake --preset=default
 ```
 
 Build command:
@@ -20,3 +20,24 @@ Run the executable:
 ./build/space-invaders
 ```
 
+## Unit tests configuration
+
+The unit tests are manager by [GoogleTest](https://github.com/google/googletest). The CMake configuration automatically installs it.
+
+Setup command:
+
+```sh
+cmake --preset test-only
+```
+
+Build command:
+
+```sh
+cmake --build build
+```
+
+Run the tests:
+
+```sh
+ctest --test-dir build --output-on-failure
+```
