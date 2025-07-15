@@ -10,6 +10,7 @@
 #include <QApplication>
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
 #include <QKeyEvent>
 #include <QPushButton>
@@ -35,6 +36,7 @@ class GameScene : public QGraphicsScene {
     static constexpr int BUNKER_OFFSET = -Bunker::HEIGHT - 200;
     static constexpr double MENU_WIDTH = 300;
     static constexpr double MENU_HEIGHT = 400;
+    static constexpr int LASER_CANON_VELOCITY = 10;
 
   public:
     typedef std::function<void()> Callback;
@@ -76,6 +78,25 @@ class GameScene : public QGraphicsScene {
         _bullets.clear();
     }
 
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
+        QPointF scenePos = event->scenePos();
+        auto x_pos = scenePos.x();
+
+        if (_laser_canon != nullptr) {
+            _laser_canon->setXPosition(x_pos - LaserCanon::WIDTH / 2);
+        }
+
+        QGraphicsScene::mouseMoveEvent(event);
+    }
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override {
+        if (event->buttons() & Qt::LeftButton) {
+            _playerShotBullet();
+        }
+
+        QGraphicsScene::mousePressEvent(event);
+    }
+
     void keyReleaseEvent(QKeyEvent *key_event) {
         switch (key_event->key()) {
 
@@ -95,11 +116,11 @@ class GameScene : public QGraphicsScene {
         switch (key_event->key()) {
 
         case Qt::Key_Left:
-            _laser_canon->setXVelocity(-10);
+            _laser_canon->setXVelocity(-LASER_CANON_VELOCITY);
             break;
 
         case Qt::Key_Right:
-            _laser_canon->setXVelocity(10);
+            _laser_canon->setXVelocity(LASER_CANON_VELOCITY);
             break;
 
         case Qt::Key_Space:

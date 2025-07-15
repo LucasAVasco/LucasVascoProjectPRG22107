@@ -41,6 +41,7 @@ class Game {
     void _startGame() {
         _view.setScene(&_game_scene);
         _game_scene.restart();
+        _view.setMouseTracking(true);
     }
 
     void _exitGame() { _app->quit(); }
