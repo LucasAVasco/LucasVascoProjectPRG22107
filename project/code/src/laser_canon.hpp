@@ -57,7 +57,7 @@ class LaserCanon : public Movable, public Alive {
     static SpritePixmap _sprite_pixmap;
     uint32_t _score = 0;
     std::chrono::time_point<std::chrono::steady_clock> _last_bullet_time =
-        std::chrono::steady_clock::now();
+        std::chrono::steady_clock::time_point();
 };
 
 inline SpritePixmap LaserCanon::_sprite_pixmap =
