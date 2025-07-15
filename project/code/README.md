@@ -5,7 +5,7 @@ You must have a C++ compiler, CMake and the Qt framework installed (including de
 Setup command:
 
 ```sh
-cmake --preset=default
+cmake --preset release
 ```
 
 Build command:
