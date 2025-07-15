@@ -125,7 +125,12 @@ class GameScene : public QGraphicsScene {
         _checkShotsOnBunkers();
     }
 
-    void _enemiesShotLaserCanon() { _wave->shot(_bullets); }
+    void _enemiesShotLaserCanon() {
+        if (_isPaused()) {
+            return;
+        }
+        _wave->shot(_bullets);
+    }
 
   private:
     void _restart() {
