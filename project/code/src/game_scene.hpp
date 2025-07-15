@@ -104,10 +104,7 @@ class GameScene : public QGraphicsScene {
 
         case Qt::Key_Space:
             if (!_isPaused()) {
-                auto bullet = _laser_canon->shot();
-                if (bullet.get() != nullptr) {
-                    _bullets.push_back(std::move(bullet)); // TODO
-                }
+                _playerShotBullet();
             }
             break;
 
@@ -188,6 +185,13 @@ class GameScene : public QGraphicsScene {
         // New wave
         _wave = new Wave(this, _width, _height, _width / 2, ships_count);
         ++_num_waves;
+    }
+
+    void _playerShotBullet() {
+        auto bullet = _laser_canon->shot();
+        if (bullet.get() != nullptr) {
+            _bullets.push_back(std::move(bullet));
+        }
     }
 
     void _deleteOutOfRangeBullets() {
